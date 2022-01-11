@@ -21,3 +21,57 @@ class ControllerGame:
     def storesScore(self):
         return self.board.storesScore()
 
+    '''
+    Functie care calculeaza scorul celor 2 jucatori
+    '''
+
+    def playerScores(self):
+        player1 = 0
+        player2 = 0
+
+        if self.player.getName() == 'Player':
+            player1 = self.player.getScore()
+            player2 = self.other.getScore()
+        else:
+            player2 = self.player.getScore()
+            player1 = self.other.getScore()
+
+        return player1, player2
+
+    '''
+    Functie care specifica tura jucatorului
+    '''
+
+    def playerTurn(self):
+        return self.player.getName()
+
+    '''
+    Functie care mentine desfasurarea jocului
+    (pana cand nu mai raman pietre pe una din cele 2 linii)
+    '''
+
+    def continueGame(self):
+        return self.board.stoneLeft(self.other.getName())
+
+    '''
+    Functie care realizeaza logica din spatele selectiei unei gauri de catre jucatorul curent
+    '''
+
+    def selectHole(self, hole):
+        self.board.makeMove(hole, self.player.getName())
+        score = 0
+        store = self.board.storesScore()
+
+        if self.player.getName() == 'Player':
+            score = store[0]
+        else:
+            score = store[1]
+
+        print(self.player.getName(), score)
+
+        self.player.setScore(score)
+
+        if self.board.lastStone < 14:
+            temp = self.player
+            self.player = self.other
+            self.other = temp
