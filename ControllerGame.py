@@ -59,6 +59,8 @@ class ControllerGame:
 
     def selectHole(self, hole):
         self.board.makeMove(hole, self.player.getName())
+        self.board.lastStoneMove(self.player.getName())
+
         score = 0
         store = self.board.storesScore()
 

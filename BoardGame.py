@@ -109,3 +109,87 @@ class BoardGame:
         else:
             self.lastStone = lastPosition
 
+    def lastStoneMove(self, player):
+        board = self.firstBoardGameLine + self.secondBoardGameLine
+        if self.lastStone != -1:
+            if board[self.lastStone] - 1 == 0:
+                if player == "Player":
+
+                    if self.lastStone == 0:
+                        if board[12] != 0:
+                            board[self.lastStone] = 0
+                            board[6] = board[6] + 1 + board[12]
+                            board[12] = 0
+
+                    if self.lastStone == 1:
+                        if board[11] != 0:
+                            board[self.lastStone] = 0
+                            board[6] = board[6] + 1 + board[11]
+                            board[11] = 0
+
+                    if self.lastStone == 2:
+                        if board[10] != 0:
+                            board[self.lastStone] = 0
+                            board[6] = board[6] + 1 + board[10]
+                            board[10] = 0
+
+                    if self.lastStone == 3:
+                        if board[9] != 0:
+                            board[self.lastStone] = 0
+                            board[6] = board[6] + 1 + board[9]
+                            board[9] = 0
+
+                    if self.lastStone == 4:
+                        if board[8] != 0:
+                            board[self.lastStone] = 0
+                            board[6] = board[6] + 1 + board[8]
+                            board[8] = 0
+
+                    if self.lastStone == 5:
+                        if board[7] != 0:
+                            board[self.lastStone] = 0
+                            board[6] = board[6] + 1 + board[7]
+                            board[7] = 0
+
+                else:
+                    if self.lastStone == 12:
+                        if board[0] != 0:
+                            board[self.lastStone] = 0
+                            board[13] = board[13] + 1 + board[0]
+                            board[0] = 0
+
+                    if self.lastStone == 11:
+                        if board[1] != 0:
+                            board[self.lastStone] = 0
+                            board[13] = board[13] + 1 + board[1]
+                            board[1] = 0
+
+                    if self.lastStone == 10:
+                        if board[2] != 0:
+                            board[self.lastStone] = 0
+                            board[13] = board[13] + 1 + board[2]
+                            board[2] = 0
+
+                    if self.lastStone == 9:
+                        if board[3] != 0:
+                            board[self.lastStone] = 0
+                            board[13] = board[13] + 1 + board[3]
+                            board[3] = 0
+
+                    if self.lastStone == 8:
+                        if board[4] != 0:
+                            board[self.lastStone] = 0
+                            board[13] = board[13] + 1 + board[4]
+                            board[4] = 0
+
+                    if self.lastStone == 7:
+                        if board[5] != 0:
+                            board[self.lastStone] = 0
+                            board[13] = board[13] + 1 + board[5]
+                            board[5] = 0
+
+        for index in range(14):
+            if index < 7:
+                self.firstBoardGameLine[index] = board[index]
+            else:
+                self.secondBoardGameLine[index - 7] = board[index]
