@@ -6,6 +6,7 @@ Observatii: A se consulta readme-ul inainte de inceperea jocului
 
 import os
 import pygame
+import ControllerGame
 
 '''
 Alegem modul de joc dorit.(calculator sau alt oponent)
@@ -124,7 +125,7 @@ def scorePlayer(scores):
     return player1Score, player2Score
 
 
-def updateScreen(board, h, s, title, screen):
+def updateScreen(board, h, s, title, screen, game):
     bgcolor = (0, 0, 0)
 
     screen.fill(bgcolor)
@@ -132,18 +133,19 @@ def updateScreen(board, h, s, title, screen):
 
     screen.blit(title, (350, 80))
 
-    hole12 = holeImage(h, 1)
-    hole11 = holeImage(h, 1)
-    hole10 = holeImage(h, 1)
-    hole9 = holeImage(h, 1)
-    hole8 = holeImage(h, 1)
-    hole7 = holeImage(h, 1)
-    hole6 = holeImage(h, 1)
-    hole5 = holeImage(h, 1)
-    hole4 = holeImage(h, 1)
-    hole3 = holeImage(h, 1)
-    hole2 = holeImage(h, 1)
-    hole1 = holeImage(h, 1)
+    hole12 = holeImage(h, game.getSecondHoleValue(6))
+    hole11 = holeImage(h, game.getSecondHoleValue(5))
+    hole10 = holeImage(h, game.getSecondHoleValue(4))
+    hole9 = holeImage(h, game.getSecondHoleValue(3))
+    hole8 = holeImage(h, game.getSecondHoleValue(2))
+    hole7 = holeImage(h, game.getSecondHoleValue(1))
+
+    hole6 = holeImage(h, game.getFirstHoleValue(6))
+    hole5 = holeImage(h, game.getFirstHoleValue(5))
+    hole4 = holeImage(h, game.getFirstHoleValue(4))
+    hole3 = holeImage(h, game.getFirstHoleValue(3))
+    hole2 = holeImage(h, game.getFirstHoleValue(2))
+    hole1 = holeImage(h, game.getFirstHoleValue(1))
 
     screen.blit(hole12, (310, 170))
     screen.blit(hole11, (367, 170))
@@ -159,8 +161,9 @@ def updateScreen(board, h, s, title, screen):
     screen.blit(hole5, (585, 237))
     screen.blit(hole6, (642, 237))
 
-    store1 = storeImage(s, 0)
-    store2 = storeImage(s, 1)
+    stores = game.storesScore()
+    store1 = storeImage(s, stores[0])
+    store2 = storeImage(s, stores[1])
 
     screen.blit(store2, (248, 170))
     screen.blit(store1, (704, 170))
@@ -187,7 +190,7 @@ def pygameScreen(player):
     pygame.display.set_caption('Game-of-Mancala')
     running = 1
     # LEFT = 1
-    # game = MancalaController.MancalaController()
+    game = ControllerGame.ControllerGame()
 
     board = loadBoard()
     h = loadHoles()
@@ -195,7 +198,7 @@ def pygameScreen(player):
     title = loadTitle()
 
     while running:
-        updateScreen(board, h, s, title, screen)
+        updateScreen(board, h, s, title, screen, game)
 
 
 pygameScreen(choosePlayer())
