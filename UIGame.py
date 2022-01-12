@@ -5,10 +5,13 @@ Observatii: A se consulta readme-ul inainte de inceperea jocului
 """
 
 import os
+import random
+import time
+
 import pygame
 import ControllerGame
 
-from pygame import K_1, K_2, K_3, K_4, K_5, K_6, K_7, K_8, K_9, K_0, K_MINUS, K_EQUALS
+from pygame import K_1, K_2, K_3, K_4, K_5, K_6, K_7, K_8, K_9, K_0, K_MINUS, K_EQUALS, K_ESCAPE
 
 '''
 Alegem modul de joc dorit.(calculator sau alt oponent)
@@ -183,7 +186,10 @@ def updateScreen(board, h, s, title, screen, game, currentPlayer):
 
     name = namePlayer(currentPlayer)
 
-    screen.blit(name, (400, 350))
+    if currentPlayer[-1] != '!':
+        screen.blit(name, (400, 350))
+    else:
+        screen.blit(name, (300, 350))
 
     pygame.display.flip()
 
@@ -226,49 +232,71 @@ def pygameScreen(player):
                 running = 0
 
             if game.continueGame():
-                if event.type == pygame.KEYDOWN:
-                    if event.key == K_1:
-                        value = 1
-                        game.selectHole(value)
-                    if event.key == K_2:
-                        value = 2
-                        game.selectHole(value)
-                    if event.key == K_3:
-                        value = 3
-                        game.selectHole(value)
-                    if event.key == K_4:
-                        value = 4
-                        game.selectHole(value)
-                    if event.key == K_5:
-                        value = 5
-                        game.selectHole(value)
-                    if event.key == K_6:
-                        value = 6
-                        game.selectHole(value)
-                    if event.key == K_7:
-                        value = 12
-                        game.selectHole(value)
-                    if event.key == K_8:
-                        value = 11
-                        game.selectHole(value)
-                    if event.key == K_9:
-                        value = 10
-                        game.selectHole(value)
-                    if event.key == K_0:
-                        value = 9
-                        game.selectHole(value)
-                    if event.key == K_MINUS:
-                        value = 8
-                        game.selectHole(value)
-                    if event.key == K_EQUALS:
-                        value = 7
-                        game.selectHole(value)
-
+                updateScreen(board, h, s, title, screen, game, currentPlayer)
+                if currentPlayer.lower() == "player 1":
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == K_1:
+                            value = 1
+                            game.selectHole(value)
+                        if event.key == K_2:
+                            value = 2
+                            game.selectHole(value)
+                        if event.key == K_3:
+                            value = 3
+                            game.selectHole(value)
+                        if event.key == K_4:
+                            value = 4
+                            game.selectHole(value)
+                        if event.key == K_5:
+                            value = 5
+                            game.selectHole(value)
+                        if event.key == K_6:
+                            value = 6
+                            game.selectHole(value)
+                        if event.key == K_7:
+                            value = 12
+                            game.selectHole(value)
+                        if event.key == K_8:
+                            value = 11
+                            game.selectHole(value)
+                        if event.key == K_9:
+                            value = 10
+                            game.selectHole(value)
+                        if event.key == K_0:
+                            value = 9
+                            game.selectHole(value)
+                        if event.key == K_MINUS:
+                            value = 8
+                            game.selectHole(value)
+                        if event.key == K_EQUALS:
+                            value = 7
+                            game.selectHole(value)
+                        if event.key == K_ESCAPE:
+                            exit(0)
                     updateScreen(board, h, s, title, screen, game, currentPlayer)
-
                 else:
-
+                    value = []
+                    for index in range(6):
+                        if game.board.getFirstHoleValue(index) != 0:
+                            value.append(index)
+                    for index in range(6):
+                        if game.board.getSecondHoleValue(index) != 0:
+                            value.append(index + 7)
+                    time.sleep(3)
+                    game.selectHole(random.choice(value))
                     updateScreen(board, h, s, title, screen, game, currentPlayer)
+
+            else:
+                game.endGame()
+                winner = game.winner()
+                if winner == "tie":
+                    updateScreen(board, h, s, title, screen, game, "Is tie :)")
+                elif winner == "Player":
+                    updateScreen(board, h, s, title, screen, game, "Player 1 win the game!")
+                else:
+                    updateScreen(board, h, s, title, screen, game, player + "win the game!")
+                if event.key == K_ESCAPE:
+                    exit(0)
 
 
 pygameScreen(choosePlayer())

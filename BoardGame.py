@@ -109,6 +109,10 @@ class BoardGame:
         else:
             self.lastStone = lastPosition
 
+    '''
+    Mutarea speciala a unei singure pietre intr-o casuta goala
+    '''
+
     def lastStoneMove(self, player):
         board = self.firstBoardGameLine + self.secondBoardGameLine
         if self.lastStone != -1:
@@ -193,3 +197,15 @@ class BoardGame:
                 self.firstBoardGameLine[index] = board[index]
             else:
                 self.secondBoardGameLine[index - 7] = board[index]
+
+    '''
+    Dupa terminarea jocului, jucatorul curent muta toate pietrele din acest rand in store-ul lui
+    '''
+
+    def rowToStore(self, player):
+        if player == "Player":
+            for index in range(6):
+                self.firstBoardGameLine[6] = self.firstBoardGameLine[6] + self.firstBoardGameLine[index]
+        else:
+            for index in range(6):
+                self.secondBoardGameLine[6] = self.secondBoardGameLine[6] + self.secondBoardGameLine[index]

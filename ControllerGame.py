@@ -69,11 +69,38 @@ class ControllerGame:
         else:
             score = store[1]
 
-        print(self.player.getName(), score)
-
         self.player.setScore(score)
 
         if self.board.lastStone < 14:
             temp = self.player
             self.player = self.other
             self.other = temp
+
+    '''
+    Functia care realizeaza logica jocului dupa terminarea acestuia
+    '''
+
+    def endGame(self):
+        self.board.rowToStore(self.other.getName())
+
+        score = 0
+        store = self.board.storesScore()
+
+        if self.other.getName() == 'Player':
+            score = store[0]
+        else:
+            score = store[1]
+
+        self.other.setScore(score)
+
+    '''
+    Functia care precizeaza rezultatul jocului
+    '''
+
+    def winner(self):
+        if self.player.getScore() == self.other.getScore():
+            return "tie"
+        elif self.player.getScore() > self.other.getScore():
+            return self.player.getName()
+        else:
+            return self.other.getName()
