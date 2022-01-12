@@ -5,6 +5,9 @@ Clasa va comunica cu Controller-ul care va realiza in urma datelor oferite de Bo
 
 
 class BoardGame:
+    """
+    Get-uri,Set-uri si anumite functii necesare la realizarea interfetei jocului
+    """
     def __init__(self):
         self.firstBoardGameLine = [4, 4, 4, 4, 4, 4, 0]
         self.secondBoardGameLine = [4, 4, 4, 4, 4, 4, 0]
@@ -22,8 +25,16 @@ class BoardGame:
     def getLastStone(self):
         return self.lastStone
 
+    '''
+    Functie ce trimite scorurile celor 2 jucatori
+    '''
+
     def storesScore(self):
         return self.firstBoardGameLine[6], self.secondBoardGameLine[6]
+
+    '''
+    Functie foarte necesara pentru a preciza daca au mai ramas sau nu pietre pe randul jucatorului
+    '''
 
     def stoneLeft(self, name):
         totalStone = 0
@@ -40,6 +51,11 @@ class BoardGame:
     '''
 
     def makeMove(self, hole, name):
+        """
+        :param hole: parametru ce ofera pozitia unde trebuie realizata mutarea in tabla
+        :param name: numele jucatorului aflat in tura
+        :return:
+        """
         lastPosition = 0
         stones = 0
         if hole < 7:
@@ -114,6 +130,10 @@ class BoardGame:
     '''
 
     def lastStoneMove(self, player):
+        """
+        :param player: numele jucatorului aflat in tura
+        :return:
+        """
         board = self.firstBoardGameLine + self.secondBoardGameLine
         if self.lastStone != -1:
             if board[self.lastStone] - 1 == 0:
@@ -203,6 +223,10 @@ class BoardGame:
     '''
 
     def rowToStore(self, player):
+        """
+        :param player: numele jucatorului aflat in tura
+        :return:
+        """
         if player == "Player":
             for index in range(6):
                 self.firstBoardGameLine[6] = self.firstBoardGameLine[6] + self.firstBoardGameLine[index]

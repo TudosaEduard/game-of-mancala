@@ -5,7 +5,6 @@ cum ar fi tipul de jucator, scorul sau daca poate indeplini abilitatea: last sto
 
 
 class PlayerGame:
-
     def __init__(self, name):
         self.name = name
         self.score = 0

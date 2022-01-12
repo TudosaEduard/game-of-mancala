@@ -22,7 +22,7 @@ class ControllerGame:
         return self.board.storesScore()
 
     '''
-    Functie care calculeaza scorul celor 2 jucatori
+    Functie care calculeaza scorul celor 2 jucatori si il returneaza
     '''
 
     def playerScores(self):

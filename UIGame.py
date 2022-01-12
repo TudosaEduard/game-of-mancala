@@ -121,6 +121,11 @@ def holeImage(h, value):
         return h[6]
 
 
+'''
+Crearea textului afisat in josul paginii pentru a anunta cine este in tura, cat si a scorului celor 2 jucatori
+'''
+
+
 def scorePlayer(scores):
     font = pygame.font.Font('freesansbold.ttf', 40)
 
@@ -135,7 +140,25 @@ def namePlayer(name):
     return font.render(name, True, (37, 175, 82))
 
 
+'''
+Aceasta functie updateScreen este functia care face display la toate elementele necesare 
+pentru a se realiza jocul, in urma unei mutari aceasta schimband interfata cu una noua
+dupa update-urile necesare.
+'''
+
+
 def updateScreen(board, h, s, title, screen, game, currentPlayer):
+    """
+    :param board: tabla de joc adaugata
+    :param h: vector cu imaginile gaurilor luate din folder-ul images
+    :param s: vector cu imaginile store-urilor preluate din folder-ul images
+    :param title: imaginea cu titlul Mancala
+    :param screen: fereastra jocului
+    :param game: parametru ce face referire la logica jocului
+    :param currentPlayer: parametru ce precizeaza player-ul care este la tura
+    :return:
+    """
+
     bgcolor = (0, 0, 0)
 
     screen.fill(bgcolor)
@@ -200,20 +223,26 @@ Pregatim mai multe iteme necesare pentru realizarea UI-ului
 
 
 def pygameScreen(player):
+    """
+    :param player: tipul adversarului citit din consola
+    """
     pygame.init()
-    clock = pygame.time.Clock()
     widthScreen = 1000
     heightScreen = 500
     screen = pygame.display.set_mode((widthScreen, heightScreen))
     pygame.display.set_caption('Game-of-Mancala')
     running = 1
-    # LEFT = 1
     game = ControllerGame.ControllerGame()
 
     board = loadBoard()
     h = loadHoles()
     s = loadStore()
     title = loadTitle()
+
+    '''
+    Aici rulam programul efectiv pana la terminarea partidei de Mancala 
+    in functie de parametri alesi si de parcursul jocului
+    '''
 
     currentPlayer = 'Player 1'
     while running:
@@ -273,18 +302,67 @@ def pygameScreen(player):
                             game.selectHole(value)
                         if event.key == K_ESCAPE:
                             exit(0)
+
                     updateScreen(board, h, s, title, screen, game, currentPlayer)
+
                 else:
-                    value = []
-                    for index in range(6):
-                        if game.board.getFirstHoleValue(index) != 0:
-                            value.append(index)
-                    for index in range(6):
-                        if game.board.getSecondHoleValue(index) != 0:
-                            value.append(index + 7)
-                    time.sleep(3)
-                    game.selectHole(random.choice(value))
-                    updateScreen(board, h, s, title, screen, game, currentPlayer)
+                    if player[0].lower() == 'p':
+                        if event.type == pygame.KEYDOWN:
+                            if event.key == K_1:
+                                value = 1
+                                game.selectHole(value)
+                            if event.key == K_2:
+                                value = 2
+                                game.selectHole(value)
+                            if event.key == K_3:
+                                value = 3
+                                game.selectHole(value)
+                            if event.key == K_4:
+                                value = 4
+                                game.selectHole(value)
+                            if event.key == K_5:
+                                value = 5
+                                game.selectHole(value)
+                            if event.key == K_6:
+                                value = 6
+                                game.selectHole(value)
+                            if event.key == K_7:
+                                value = 12
+                                game.selectHole(value)
+                            if event.key == K_8:
+                                value = 11
+                                game.selectHole(value)
+                            if event.key == K_9:
+                                value = 10
+                                game.selectHole(value)
+                            if event.key == K_0:
+                                value = 9
+                                game.selectHole(value)
+                            if event.key == K_MINUS:
+                                value = 8
+                                game.selectHole(value)
+                            if event.key == K_EQUALS:
+                                value = 7
+                                game.selectHole(value)
+                            if event.key == K_ESCAPE:
+                                exit(0)
+
+                        updateScreen(board, h, s, title, screen, game, currentPlayer)
+
+                    else:
+
+                        value = []
+                        for index in range(6):
+                            if game.board.getFirstHoleValue(index) != 0:
+                                value.append(index)
+                        for index in range(6):
+                            if game.board.getSecondHoleValue(index) != 0:
+                                value.append(index + 7)
+
+                        time.sleep(3)
+                        game.selectHole(random.choice(value))
+
+                        updateScreen(board, h, s, title, screen, game, currentPlayer)
 
             else:
                 game.endGame()
@@ -293,10 +371,10 @@ def pygameScreen(player):
                     updateScreen(board, h, s, title, screen, game, "Is tie :)")
                 elif winner == "Player":
                     updateScreen(board, h, s, title, screen, game, "Player 1 win the game!")
+                elif player[0].lower() == 'p':
+                    updateScreen(board, h, s, title, screen, game, "Player 2 win the game!")
                 else:
-                    updateScreen(board, h, s, title, screen, game, player + "win the game!")
-                if event.key == K_ESCAPE:
-                    exit(0)
+                    updateScreen(board, h, s, title, screen, game, "Computer win the game!")
 
 
 pygameScreen(choosePlayer())
